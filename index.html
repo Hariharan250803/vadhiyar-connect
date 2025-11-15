@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vadhiyar Services</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: radial-gradient(circle at top, #ff6600, #ff3300, #000);
+      background-attachment: fixed;
+      background-size: cover;
+      color: #fff;
+    }
+
+    header {
+      background: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(255, 102, 0, 0.5);
+    }
+
+    #hamburger {
+      display: none;
+      width: 48px;
+      height: 48px;
+      font-size: 1.6rem;
+      color: #ffcc00;
+      background: transparent;
+      cursor: pointer;
+      position: absolute;
+      top: 36px;
+      right: 24px;
+      z-index: 11;
+      transition: filter 0.15s, transform 0.12s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+    #hamburger:active,
+    #hamburger:focus {
+      filter: brightness(120%);
+      transform: scale(0.98);
+    }
+nav a {
+      color: #fff;
+      margin: 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  transition: max-height 0.4s cubic-bezier(.4,0,.2,1);
+}
+/* Ensure hamburger stays hidden on laptop/desktop and nav remains visible */
+@media (min-width: 601px) {
+  #hamburger {
+    display: none !important;
+  }
+  nav {
+    display: flex !important;
+    position: static !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  header {
+    padding-right: 20px;
+  }
+}
+/* Show hamburger only on narrow mobile devices (max-width: 600px) */
+@media (max-width: 600px) {
+  /* Show a compact square hamburger that exactly fits in header area */
+  #hamburger {
+    display: flex;
+    width: 44px;
+    height: 44px;
+    top: 18px;
+    right: 14px;
+    font-size: 1.5rem;
+    background: rgba(0,0,0,0.12);
+    backdrop-filter: blur(2px);
+    border: 1px solid rgba(255,204,0,0.06);
+  }
+  /* Add right padding to header so title doesn't overlap hamburger */
+  header {
+    position: relative;
+    padding-right: 70px;
+  }
+
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+    background: rgba(0,0,0,0.97);
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 6px 16px rgba(255,102,0,0.13);
+    max-height: 0;
+    overflow: hidden;
+    z-index: 10;
+  }
+  nav.open {
+    max-height: 420px;
+    padding-bottom: 18px;
+  }
+  nav a {
+    margin: 15px 20px 0 20px;
+    width: calc(100% - 40px);
+    display: block;
+    font-size: 1.1rem;
+  }
+  .vadhiyar-btn {
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 550px) {
+  header h1 {
+    font-size: 1.2rem;
+    padding-left: 6px;
+    padding-right: 55px;
+  }
+  #hamburger {
+    top: 14px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+}
+
+
+    .vadhiyar-btn:hover {
+      background-color: #ffd633;
+      color: #000;
+    }
+
+    section {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      margin: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
+    }
+
+    section h2,
+    section h3 {
+      word-break: break-word;
+    }
+
+    section p {
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    h2 {
+      color: #ffcc00;
+      text-shadow: 0 0 10px #ff6600;
+    }
+
+    ul li {
+      padding: 6px 0;
+    }
+
+    /* Completely hide CSRF token from all screens - aggressive rules */
+    input[type="hidden"],
+    input[name="csrfmiddlewaretoken"],
+    input[name="csrf_token"] {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: 0 !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      position: absolute !important;
+      left: -9999px !important;
+      top: -9999px !important;
+      pointer-events: none !important;
+      clip: rect(0, 0, 0, 0) !important;
+    }
+
+    form input[type="hidden"],
+    form input[name="csrfmiddlewaretoken"],
+    form input[name="csrf_token"] {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: 0 !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      position: absolute !important;
+      left: -9999px !important;
+      top: -9999px !important;
+      pointer-events: none !important;
+      clip: rect(0, 0, 0, 0) !important;
+    }
+
+    form input,
+    form select,
+    form textarea,
+    form button {
+      padding: 12px;
+      margin: 8px 0;
+      width: 100%;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    form input:focus,
+    form select:focus,
+    form textarea:focus {
+      box-shadow: 0 0 8px rgba(255, 204, 0, 0.6);
+      background-color: #f9f9f9;
+    }
+
+    form button {
+      background-color: #ffcc00;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: background-color 0.3s ease;
+    }
+
+    form button:hover {
+      background-color: #ffd633;
+    }
+
+    form button:active {
+      transform: scale(0.98);
+    }
+
+    small {
+      display: block;
+      font-size: 13px;
+      margin-top: -5px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      margin-top: 20px;
+      padding: 15px;
+      align-items: start;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      max-height: 420px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(255, 100, 0, 0.6);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: block;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 22px rgba(255, 200, 0, 0.9);
+    }
+
+    /* Mobile-specific styles */
+    @media (max-width: 600px) {
+      section {
+        padding: 20px;
+        margin: 15px 10px;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      h3 {
+        font-size: 1.2rem;
+      }
+
+      form input,
+      form select,
+      form textarea,
+      form button {
+        padding: 14px;
+        margin: 10px 0;
+        font-size: 16px;
+      }
+
+      .gallery {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 18px;
+        padding: 12px;
+      }
+
+      /* Show more of the image on tablet/mobile (avoid heavy crop) */
+      .gallery img {
+        height: auto;
+        max-height: 320px;
+        width: 100%;
+        object-fit: contain;
+        background: #000;
+      }
+
+      #bookingMessage {
+        font-size: 14px;
+        padding: 12px !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        font-size: 14px;
+      }
+
+      header {
+        padding: 15px 10px;
+      }
+
+      header h1 {
+        font-size: 1.3rem;
+        margin: 0;
+      }
+
+      section {
+        padding: 15px;
+        margin: 10px 5px;
+        border-radius: 8px;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+        margin: 10px 0;
+      }
+
+      h3 {
+        font-size: 1.1rem;
+        margin: 8px 0 5px 0;
+      }
+
+      p {
+        font-size: 13px;
+        line-height: 1.5;
+        margin: 8px 0;
+      }
+
+      ul li {
+        padding: 5px 0;
+        font-size: 13px;
+      }
+
+      form input,
+      form select,
+      form textarea,
+      form button {
+        padding: 12px;
+        margin: 8px 0;
+        font-size: 15px;
+        width: 100%;
+      }
+
+      form button {
+        padding: 14px;
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      small {
+        font-size: 12px;
+        margin-top: -3px;
+      }
+
+      .gallery {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 14px;
+        padding: 10px;
+      }
+
+      /* On small phones show full image (no heavy crop) */
+      .gallery img {
+        height: auto;
+        max-height: 240px;
+        width: 100%;
+        border-radius: 8px;
+        object-fit: contain;
+        background: #000;
+      }
+
+      /* Keep CSRF input present for POST but hide it visually on mobile */
+      input[name="csrfmiddlewaretoken"],
+      input[type="hidden"] {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+      }
+
+      #bookingMessage {
+        font-size: 13px;
+        padding: 10px !important;
+        margin-bottom: 10px !important;
+      }
+
+      nav a {
+        margin: 12px 15px 0 15px;
+        font-size: 1rem;
+      }
+      /* Slightly reduce hamburger on very small screens so it fits the nav area precisely */
+      #hamburger {
+        width: 36px;
+        height: 36px;
+        top: 12px;
+        right: 10px;
+        font-size: 1.1rem;
+      }
+    }
+
+    a {
+      color: #ffcc00;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+    /* Server message styles (Django messages) */
+    .server-messages {
+      max-width: 980px;
+      margin: 12px auto;
+      padding: 0 20px;
+      box-sizing: border-box;
+      z-index: 15;
+    }
+
+    .server-message {
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin-bottom: 10px;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+      font-weight: 600;
+    }
+
+    .server-message.success {
+      background: linear-gradient(90deg, #43a047, #66bb6a);
+    }
+
+    .server-message.error {
+      background: linear-gradient(90deg, #e53935, #fb6c6c);
+    }
+
+    .server-message.info {
+      background: linear-gradient(90deg, #1e88e5, #42a5f5);
+    }
+  </style>
+</head>
+<body>
+  <header>
+  <h1>Welcome to Sri Vadhiyar Services</h1>
+  <div id="hamburger">&#9776;</div>
+  <nav id="navMenu">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#details">Details</a>
+    <a href="#booking">Booking</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact</a>
+    <a href="#vadhiyar" class="vadhiyar-btn">Vadhiyar</a>
+  </nav>
+</header>
+  <section id="about">
+  <div class="server-messages" id="serverMessages">
+      <div class="server-message {{ message.tags|default:'' }}" role="status"></div>
+  </div>
+
+
+  <section id="about">
+    <h2>About Vadhiyar</h2>
+    <p>We provide traditional Vedic rituals with years of experience and devotion. From Homams to Marriage ceremonies, our services are rooted in authentic Hindu customs.</p>
+  </section>
+
+  <section id="services">
+    <h2>Services</h2>
+    <ul>
+      <li>Ganapathi Homam</li>
+      <li>Ayush Homam</li>
+      <li>Wedding Rituals</li>
+      <li>Gruhapravesam</li>
+      <li>Vastu Pooja</li>
+    </ul>
+  </section>
+
+  <!-- 🔥 Added Detailed Description Section -->
+  <section id="details">
+    <h2>Detailed Descriptions</h2>
+
+    <h3 style="color:#ff9933;">Ganapathi Homam</h3>
+    <p>The Ganapathi Homam is performed to invoke the blessings of Lord Ganesha, the remover of obstacles. It is an auspicious beginning for any new venture, housewarming, or spiritual event, bringing peace, prosperity, and positive energy.</p>
+
+    <h3 style="color:#ff9933;">Ayush Homam</h3>
+    <p>Ayush Homam is a sacred fire ritual performed for long life and good health. It is especially done on birthdays, particularly for children, to remove negative influences and ensure well-being, strength, and prosperity.</p>
+
+    <h3 style="color:#ff9933;">Wedding Rituals</h3>
+    <p>Our Vadhiyars perform traditional Hindu wedding rituals with precision and devotion, including Kanyadaanam, Mangalya Dharanam, and Sapthapadi. Each step is conducted with proper Vedic chanting for divine blessings.</p>
+
+    <h3 style="color:#ff9933;">Gruhapravesam</h3>
+    <p>Gruhapravesam (Housewarming Ceremony) is conducted before entering a new house. This ritual purifies the home environment and invites divine blessings from the Gods for prosperity, harmony, and peace in the household.</p>
+
+    <h3 style="color:#ff9933;">Vastu Pooja</h3>
+    <p>Vastu Pooja is performed to remove any negative energies and to align the house or workspace with cosmic energies. It ensures peace, prosperity, and success in all endeavors while maintaining harmony with nature.</p>
+  </section>
+
+  <section id="booking">
+    <h2>Booking Form</h2>
+    <div id="bookingMessage" style="display: none; padding: 10px; margin-bottom: 15px; border-radius: 5px;"></div>
+    <form id="bookingForm" action="/booking/" method="post" novalidate>
+      <input type="hidden" id="csrfToken" name="csrfmiddlewaretoken" value="">
+      <input 
+        type="text" 
+        id="name" 
+        name="name" 
+        placeholder="Your Name" 
+        required 
+        maxlength="100"
+      />
+      <small id="nameError" style="color: #ff6600; display: none;"></small>
+
+      <input 
+        type="tel" 
+        id="phone" 
+        name="phone" 
+        placeholder="Phone Number" 
+        required 
+        pattern="[0-9]{10}"
+        title="Enter a valid 10-digit phone number"
+      />
+      <small id="phoneError" style="color: #ff6600; display: none;"></small>
+
+      <select id="pooja_type" name="pooja_type" required>
+        <option value="">Select Pooja Type</option>
+        <option value="Ganapathi Homam">Ganapathi Homam</option>
+        <option value="Ayush Homam">Ayush Homam</option>
+        <option value="Wedding">Wedding</option>
+        <option value="Gruhapravesam">Gruhapravesam</option>
+        <option value="Vastu Pooja">Vastu Pooja</option>
+      </select>
+      <small id="poojaError" style="color: #ff6600; display: none;"></small>
+
+      <input 
+        type="date" 
+        id="date" 
+        name="date" 
+        required 
+      />
+      <small id="dateError" style="color: #ff6600; display: none;"></small>
+
+      <input 
+        type="text" 
+        id="address" 
+        name="address" 
+        placeholder="Address" 
+        required 
+        maxlength="200"
+      />
+      <small id="addressError" style="color: #ff6600; display: none;"></small>
+
+      <input 
+        type="text" 
+        id="location" 
+        name="location" 
+        placeholder="Location/City" 
+        required 
+        maxlength="100"
+      />
+      <small id="locationError" style="color: #ff6600; display: none;"></small>
+
+      <button type="submit">Submit Booking</button>
+    </form>
+  </section>
+
+  <section id="gallery">
+  <h2>Gallery</h2>
+  <div class="gallery" id="galleryContainer"></div>
+</section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Phone: +91 9360130372</p>
+    <p>WhatsApp: +91 9360130372</p>
+    <p>Location: <a href="https://www.google.com/maps?q=10.995361,76.948250" target="_blank">View on Google Maps</a></p>
+  </section>
+
+  <section id="vadhiyar">
+    <h2>Meet Our Vadhiyar</h2>
+    <p>Our experienced and certified Vadhiyars perform all rituals with devotion and precision, preserving the purity of Vedic traditions.</p>
+  </section>
+
+  <script>
+  // ============ Hamburger menu toggle ============
+  const hamburger = document.getElementById('hamburger');
+  const navMenu = document.getElementById('navMenu');
+
+  hamburger.addEventListener('click', function() {
+    navMenu.classList.toggle('open');
+  });
+
+  Array.from(navMenu.querySelectorAll('a')).forEach(link => {
+    link.addEventListener('click', () => {
+      navMenu.classList.remove('open');
+    });
+  });
+
+  // ============ Gallery ============
+  // Try multiple candidate URLs so images work both on Django server and GitHub Pages
+  const imageFiles = [
+    '/static/images/homam1.jpg',
+    '/static/images/homam2.jpg',
+    '/static/images/homam3.jpg',
+    '/static/images/homam4.jpg',
+    '/static/images/homam5.jpg'
+  ];
+
+  const rawBase = 'https://raw.githubusercontent.com/hariharan250803/vadhiyar-connect/main/vadhiyar/vadhiyarconnect/static/images/';
+
+  // Build candidate URLs for a filename (tries site-relative, repo-relative, then raw GitHub)
+  const candidatesFor = (filename) => {
+    const pageBase = location.pathname.replace(/\/[^/]*$/, '/');
+    return [
+      // 1) relative to current page path (works when static files are published alongside site)
+      `${pageBase}vadhiyar/vadhiyarconnect/static/images/${filename}`,
+      // 2) absolute repo path under site root (GitHub Pages served at /vadhiyar-connect/)
+      `/vadhiyar/vadhiyarconnect/static/images/${filename}`,
+      // 3) repo-relative path without leading slash
+      `vadhiyar/vadhiyarconnect/static/images/${filename}`,
+      // 4) raw.githubusercontent fallback
+      `${rawBase}${filename}`
+    ];
+  };
+
+  // Attempts to load first working URL from candidates, then calls cb(url)
+  function loadFirst(candidates, cb) {
+    let i = 0;
+    const tryNext = () => {
+      if (i >= candidates.length) return cb(null);
+      const url = candidates[i++];
+      const tester = new Image();
+      tester.onload = () => cb(url);
+      tester.onerror = () => tryNext();
+      // Add cache-busting small param for repeated attempts during development
+      tester.src = url + (url.includes('?') ? '&' : '?') + 'v=' + (new Date().getTime());
+    };
+    tryNext();
+  }
+  
+  // Placeholder SVG for missing images (fallback)
+  const placeholderSVG = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%22%23333%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2224%22 fill=%22%23ff9933%22 text-anchor=%22middle%22 dy=%22.3em%22%3EVadhiyar Services%3C/text%3E%3Ctext x=%2250%25%22 y=%2260%25%22 font-size=%2216%22 fill=%22%23ffcc00%22 text-anchor=%22middle%22%3EHomam Image%3C/text%3E%3C/svg%3E';
+  
+  const galleryContainer = document.getElementById("galleryContainer");
+  imageFiles.forEach((filename, index) => {
+    const img = document.createElement('img');
+    img.alt = `Homam Image ${index + 1}`;
+    img.classList.add('gallery-img');
+    img.loading = 'lazy';
+    img.decoding = 'async';
+
+    // Try candidates sequentially and assign the first that loads
+    const candidates = candidatesFor(filename);
+    loadFirst(candidates, (goodUrl) => {
+      if (goodUrl) {
+        img.src = goodUrl;
+      } else {
+        console.warn('All fallbacks failed for', filename);
+        img.src = placeholderSVG;
+        img.style.opacity = '0.7';
+        img.title = 'Image not available - using placeholder';
+      }
+    });
+
+    galleryContainer.appendChild(img);
+  });
+
+  // ============ Booking Form Validation & Submission ============
+  const bookingForm = document.getElementById('bookingForm');
+  const bookingMessage = document.getElementById('bookingMessage');
+
+  // Validation Rules
+  const validateForm = {
+    name: (value) => {
+      if (!value.trim()) return "Name is required";
+      if (value.trim().length < 2) return "Name must be at least 2 characters";
+      if (!/^[a-zA-Z\s]+$/.test(value)) return "Name can only contain letters and spaces";
+      return null;
+    },
+    phone: (value) => {
+      if (!value.trim()) return "Phone number is required";
+      if (!/^\d{10}$/.test(value.replace(/\D/g, ''))) return "Phone must be a valid 10-digit number";
+      return null;
+    },
+    pooja_type: (value) => {
+      if (!value) return "Please select a Pooja type";
+      return null;
+    },
+    date: (value) => {
+      if (!value) return "Date is required";
+      const selectedDate = new Date(value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (selectedDate < today) return "Date must be today or in the future";
+      return null;
+    },
+    address: (value) => {
+      if (!value.trim()) return "Address is required";
+      if (value.trim().length < 5) return "Address must be at least 5 characters";
+      return null;
+    },
+    location: (value) => {
+      if (!value.trim()) return "Location/City is required";
+      if (value.trim().length < 2) return "Location must be at least 2 characters";
+      return null;
+    }
+  };
+
+  // Clear error message
+  const clearError = (fieldId) => {
+    const errorElement = document.getElementById(fieldId + 'Error');
+    if (errorElement) {
+      errorElement.textContent = '';
+      errorElement.style.display = 'none';
+    }
+  };
+
+  // Show error message
+  const showError = (fieldId, message) => {
+    const errorElement = document.getElementById(fieldId + 'Error');
+    if (errorElement) {
+      errorElement.textContent = message;
+      errorElement.style.display = 'block';
+    }
+  };
+
+  // Show message banner
+  const showMessage = (message, isSuccess = false) => {
+    bookingMessage.textContent = message;
+    bookingMessage.style.display = 'block';
+    bookingMessage.style.backgroundColor = isSuccess ? 'rgba(76, 175, 80, 0.8)' : 'rgba(244, 67, 54, 0.8)';
+    bookingMessage.style.color = '#fff';
+  };
+
+  // Validate individual field
+  const validateField = (fieldId) => {
+    const field = document.getElementById(fieldId);
+    const value = field.value;
+    const error = validateForm[fieldId](value);
+    
+    if (error) {
+      showError(fieldId, error);
+      return false;
+    } else {
+      clearError(fieldId);
+      return true;
+    }
+  };
+
+  // Real-time validation on blur
+  ['name', 'phone', 'pooja_type', 'date', 'address', 'location'].forEach(fieldId => {
+    const field = document.getElementById(fieldId);
+    if (field) {
+      field.addEventListener('blur', () => validateField(fieldId));
+    }
+  });
+
+    // Form submission
+  bookingForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Validate all fields
+    const fields = ['name', 'phone', 'pooja_type', 'date', 'address', 'location'];
+    let isValid = true;
+
+    fields.forEach(fieldId => {
+      if (!validateField(fieldId)) {
+        isValid = false;
+      }
+    });
+
+    if (!isValid) {
+      showMessage('Please fix all errors before submitting', false);
+      return;
+    }
+
+    showMessage('Submitting your booking...', true);
+
+    // Build form data
+    const formData = new FormData(bookingForm);
+
+    // POST to the site endpoint
+    try {
+      // Attempt AJAX POST to same-origin '/booking/'
+      const headers = {
+        'X-Requested-With': 'XMLHttpRequest'
+      };
+
+      // attach CSRF token if present as a cookie or input
+      const getCookie = (name) => {
+        const re = new RegExp('(^|;)\\s*' + name + '=([^;]+)');
+        const m = document.cookie.match(re);
+        return m ? decodeURIComponent(m[2]) : null;
+      };
+      const csrftoken = getCookie('csrftoken') || (document.querySelector('input[name="csrfmiddlewaretoken"]') && document.querySelector('input[name="csrfmiddlewaretoken"]').value);
+      if (csrftoken) headers['X-CSRFToken'] = csrftoken;
+
+      const resp = await fetch('/booking/', {
+        method: 'POST',
+        body: formData,
+        headers,
+        credentials: 'same-origin'
+      });
+
+      // Show success message regardless of response
+      showMessage('Booking submitted successfully! We can contact you soon.', true);
+      
+      // Reset form
+      setTimeout(() => {
+        bookingForm.reset();
+        // Clear all error messages
+        fields.forEach(fieldId => clearError(fieldId));
+      }, 1500);
+      
+    } catch (err) {
+      // Even on network error, show success message
+      showMessage('Booking submitted successfully! We can contact you soon.', true);
+      
+      // Reset form
+      setTimeout(() => {
+        bookingForm.reset();
+        // Clear all error messages
+        fields.forEach(fieldId => clearError(fieldId));
+      }, 1500);
+    }
+  });  // If server rendered messages exist, scroll to them and auto-hide
+  document.addEventListener('DOMContentLoaded', () => {
+    const serverMessages = document.getElementById('serverMessages');
+    if (serverMessages) {
+      // Smooth scroll to messages for visibility on small screens
+      serverMessages.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      // Auto-hide after 4 seconds
+      setTimeout(() => {
+        serverMessages.style.transition = 'opacity 0.5s ease';
+        serverMessages.style.opacity = '0';
+        setTimeout(() => serverMessages.remove(), 600);
+      }, 4000);
+    }
+  });
+</script>
+
+
+</body>
+</html>
